@@ -8,10 +8,11 @@ import FooterV2 from "../../../components/v2/FooterV2";
 import VersionHistoryContent from "../../../components/VersionHistoryContent";
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export async function generateMetadata({ params: { locale } }: PageProps) {
+export async function generateMetadata({ params }: PageProps) {
+  const { locale } = await params;
   if (!locales.includes(locale as Locale)) {
     notFound();
   }
@@ -32,7 +33,8 @@ export async function generateMetadata({ params: { locale } }: PageProps) {
   };
 }
 
-export default function VersionHistoryPage({ params: { locale } }: PageProps) {
+export default async function VersionHistoryPage({ params }: PageProps) {
+  const { locale } = await params;
   if (!locales.includes(locale as Locale)) {
     notFound();
   }
